@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit-element';
-import * as Rulez from "rulez-fork";
 
 import { Designer } from '../designer';
+import { SteelScale } from '../steelscale';
 export class DesignerElement extends LitElement {
     connectedCallback() {
         super.connectedCallback();
@@ -10,23 +10,15 @@ export class DesignerElement extends LitElement {
         super.disconnectedCallback();
     }
     async updated(changedProperties) {
-        const c = document.getElementById('c')
+        const c = document.getElementById('c');
+        SteelScale.HorizontalRule('horizontalRule');
+        SteelScale.VerticalRule('verticalRule');
         Designer.createCard(c, '#FFFFFF');
-        Designer.addRect();
-
-        const someSvgElement = document.getElementById('horizontalRule');
-        const rulez = new Rulez({
-            element: someSvgElement,
-            layout: 'horizontal'
-        });
-        rulez.render();
-
-        const someSvgElementa = document.getElementById('verticalRule');
-        const ruleza = new Rulez({
-            element: someSvgElementa,
-            layout: 'vertical'
-        });
-        ruleza.render();
+        Designer.lineMode(true);
+        
+        setTimeout(() => {
+            Designer.lineMode(false);
+        }, 35000);
     }
 
     createRenderRoot() {
