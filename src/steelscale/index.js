@@ -6,7 +6,11 @@ export const SteelScale = {
         const ruleElement = document.getElementById(horizontalID);
         const rule = new Rulez({
             element: ruleElement,
-            layout: 'horizontal'
+            layout: 'horizontal',
+            textDefaults: {
+                rotation: 0,
+                offset: 25
+            }
         });
         rule.render();
     },
@@ -15,7 +19,11 @@ export const SteelScale = {
         const ruleElement = document.getElementById(verticalID);
         const rulez = new Rulez({
             element: ruleElement,
-            layout: 'vertical'
+            layout: 'vertical',
+            textDefaults: {
+                rotation: -90,
+                offset: 25
+            }
         });
         rulez.render();
     }

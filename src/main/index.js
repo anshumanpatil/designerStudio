@@ -34,7 +34,7 @@ export class DesignerElement extends LitElement {
                     <svg id="horizontalRule" width="100%" height="30" xmlns="http://www.w3.org/2000/svg"></svg>
                 </div>
             </div>
-            <div class="row" style="height: 400px; width: 400px;">
+            <div class="row" style="height: 450px; width: 500px;">
                 <div class="col-sm-1" style="max-width: 30px;">
                     <svg id="verticalRule" width="30" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
                 </div>

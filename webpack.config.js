@@ -13,12 +13,12 @@ module.exports = {
 
   entry: './src/index.js',
   output: {
-    filename: 'bundle.js',
+    filename: 'designer.js',
     path: path.resolve(__dirname, 'dist'),
   },
   // plugins: [
   //   new WebpackCleanPlugin([
-  //     // 'dist/bundle.js'
+  //     // 'dist/designer.js'
   //   ])
   // ],
   module: {
