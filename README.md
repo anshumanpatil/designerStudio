@@ -13,6 +13,6 @@ with polymer and lit-html
 
 # Read more about lit-html
 
-[![N|Solid](https://enhancedjs.gallerycdn.vsassets.io/extensions/enhancedjs/html-in-template-string/0.0.4/1592659651628/Microsoft.VisualStudio.Services.Icons.Default)](https://labs.thisdot.co/blog/showcase-react-vs-lit-element-rendering-performance)
+[![N|Solid](https://lit-element.polymer-project.org/images/flame.svg)](https://labs.thisdot.co/blog/showcase-react-vs-lit-element-rendering-performance)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
