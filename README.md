@@ -13,6 +13,8 @@ with polymer and lit-html
 
 # Read more about lit-html
 
+[Lit Element](https://lit-element.polymer-project.org/guide)
+[Lit HTML](https://lit-html.polymer-project.org/guide)
 [Lit HTML Performance Comapare](https://labs.thisdot.co/blog/showcase-react-vs-lit-element-rendering-performance)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
