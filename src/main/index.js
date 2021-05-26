@@ -6,6 +6,9 @@ export class DesignerElement extends LitElement {
     constructor() {
         super();
         this.shadowRoot.innerHTML = mainHTML;
+        SteelScale.events.subscribe(e => {
+            console.log(e);
+        })
     }
 
     connectedCallback() {
@@ -21,6 +24,7 @@ export class DesignerElement extends LitElement {
         SteelScale.HorizontalRule(horizontalRule);
         SteelScale.VerticalRule(verticalRule);
         Designer.createCard(c, '#FFFF00');
+
         // Designer.lineMode(true);
 
         // setTimeout(() => {

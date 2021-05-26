@@ -1,9 +1,15 @@
 import * as Rulez from "rulez-fork";
+import { Subject } from 'rxjs';
+
 class SteelScale {
+    
     constructor() {
         if (!SteelScale.instance) {
             SteelScale.instance = this;
         }
+        this.events = new Subject();
+
+          
         return SteelScale.instance;
     }
 
@@ -17,6 +23,7 @@ class SteelScale {
             }
         });
         rule.render();
+        this.events.next({"horizontal" : true})
     }
 
     VerticalRule(element) {
