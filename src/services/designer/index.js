@@ -1,5 +1,12 @@
-export const Designer = {
-    addRect: () => {
+class Designer {
+    constructor() {
+        if (!Designer.instance) {
+            Designer.instance = this;
+        }
+        return Designer.instance;
+    }
+
+    addRect() {
         const rect = new fabric.Rect({
             left: 100,
             top: 100,
@@ -8,28 +15,23 @@ export const Designer = {
             height: 20
         });
         Designer.canvas.add(rect);
-    },
-    createCard: (element, backgroundColor) => {
+    }
+    createCard(element, backgroundColor) {
         Designer.canvas = new fabric.Canvas(element, { backgroundColor });
         fabric.Object.prototype.transparentCorners = false;
-        
-        
+    }
 
-        
-        
-    },
-    
-    lineMode: (isOn = false) => {
-        
-        if(!isOn){
+    lineMode(isOn = false) {
+
+        if (!isOn) {
             Designer.canvas.__eventListeners["mouse:down"] = [];
             Designer.canvas.__eventListeners["mouse:move"] = [];
             Designer.canvas.__eventListeners["mouse:up"] = [];
             return Designer.canvas.selection = true;
         }
-        
+
         let line, isDown;
-        
+
         Designer.canvas.selection = false;
         Designer.canvas.on('mouse:down', function (o) {
             // Designer.canvas.getObjects().map( allO => allO.selection = false);
@@ -63,4 +65,6 @@ export const Designer = {
             console.log(Designer.canvas.getObjects());
         });
     }
+
 }
+export default new Designer();

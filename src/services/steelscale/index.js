@@ -1,11 +1,15 @@
 import * as Rulez from "rulez-fork";
+class SteelScale {
+    constructor() {
+        if (!SteelScale.instance) {
+            SteelScale.instance = this;
+        }
+        return SteelScale.instance;
+    }
 
-export const SteelScale = {
-
-    HorizontalRule: (horizontalID) => {
-        const ruleElement = document.getElementById(horizontalID);
+    HorizontalRule(element) {
         const rule = new Rulez({
-            element: ruleElement,
+            element,
             layout: 'horizontal',
             textDefaults: {
                 rotation: 0,
@@ -13,12 +17,11 @@ export const SteelScale = {
             }
         });
         rule.render();
-    },
+    }
 
-    VerticalRule: (verticalID) => {
-        const ruleElement = document.getElementById(verticalID);
+    VerticalRule(element) {
         const rulez = new Rulez({
-            element: ruleElement,
+            element,
             layout: 'vertical',
             textDefaults: {
                 rotation: -90,
@@ -27,5 +30,6 @@ export const SteelScale = {
         });
         rulez.render();
     }
-
 }
+
+export default new SteelScale();

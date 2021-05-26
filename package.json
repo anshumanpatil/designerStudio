@@ -24,6 +24,7 @@
     "lit-element": "^2.5.1",
     "lit-html": "^1.4.1",
     "lodash": "^4.17.21",
+    "raw-loader": "^4.0.2",
     "rulez-fork": "^0.3.8",
     "style-loader": "^2.0.0",
     "webpack-clean": "^1.2.5"

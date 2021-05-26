@@ -6,7 +6,7 @@ module.exports = {
     contentBase: [
       path.join(__dirname, 'dist'),
       path.join(__dirname, 'public')
-      ],
+    ],
     compress: true,
     port: 9000,
   },
@@ -23,6 +23,17 @@ module.exports = {
   // ],
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        use: [
+          {
+            loader: 'raw-loader',
+            options: {
+              esModule: false,
+            },
+          },
+        ],
+      },
       {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader'],
