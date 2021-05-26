@@ -1,2 +1,2 @@
-export * from './designer'
-export * from './steelscale'
+export {default as Designer} from './designer'
+export {default as SteelScale} from './steelscale'
