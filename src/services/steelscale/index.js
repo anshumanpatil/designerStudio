@@ -1,5 +1,4 @@
 import * as Rulez from "rulez-fork";
-import { Subject } from 'rxjs';
 
 class SteelScale {
 
@@ -7,14 +6,8 @@ class SteelScale {
         if (!SteelScale.instance) {
             SteelScale.instance = this;
         }
-        this.events = new Subject();
         this._horizontalRule = null;
         this._verticalRule = null;
-
-        this.events.subscribe(e => {
-            console.log(e);
-        })
-
         return SteelScale.instance;
     }
 

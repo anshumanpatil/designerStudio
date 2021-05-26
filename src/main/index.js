@@ -36,11 +36,6 @@ export class DesignerElement extends LitElement {
         this.renderRoot.querySelector('#verticalRuleContainer').style.height = `${ht}px`;
         this.renderRoot.querySelector('#canvasContainer').style.height = `${ht}px`;
         this.renderRoot.querySelector('#canvasContainer').style.height = `${ht}px`;
-        Designer.events.next({
-            type: "canvasSize",
-            height: ht,
-            width: wt,
-        })
     }
 }
 customElements.define('designer-element', DesignerElement);

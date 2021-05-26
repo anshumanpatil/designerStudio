@@ -1,24 +1,12 @@
-import { Subject } from 'rxjs';
-
 class Designer {
     constructor() {
         if (!Designer.instance) {
             Designer.instance = this;
         }
-        this.events = new Subject();
-
-
         document.body.addEventListener('studio:line', (e) => {
             this.lineMode(e.detail.mode, e.detail.selector);
             console.log('studio:line addEventListener', e.detail);
         })
-        this.events.subscribe(e => {
-            console.log(e);
-            if (e.hasOwnProperty('type')) {
-                this[e.type](e);
-            }
-        })
-
         return Designer.instance;
     }
 
