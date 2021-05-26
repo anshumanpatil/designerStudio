@@ -13,6 +13,6 @@ with polymer and lit-html
 
 # Read more about lit-html
 
-[![N|Solid]()](https://labs.thisdot.co/blog/showcase-react-vs-lit-element-rendering-performance)
+[Lit HTML](https://labs.thisdot.co/blog/showcase-react-vs-lit-element-rendering-performance)
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
