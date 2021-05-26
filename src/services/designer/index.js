@@ -1,8 +1,24 @@
+import { Subject } from 'rxjs';
+
 class Designer {
     constructor() {
         if (!Designer.instance) {
             Designer.instance = this;
         }
+        this.events = new Subject();
+
+
+        document.body.addEventListener('studio:line', (e) => {
+            this.lineMode(e.detail.mode, e.detail.selector);
+            console.log('studio:line addEventListener', e.detail);
+        })
+        this.events.subscribe(e => {
+            console.log(e);
+            if (e.hasOwnProperty('type')) {
+                this[e.type](e);
+            }
+        })
+
         return Designer.instance;
     }
 
@@ -18,15 +34,36 @@ class Designer {
     }
     createCard(element, backgroundColor) {
         Designer.canvas = new fabric.Canvas(element, { backgroundColor });
-        fabric.Object.prototype.transparentCorners = false;
+
+        // Designer.canvas.isDrawingMode = true;
+
     }
 
-    lineMode(isOn = false) {
+    canvasSize(event) {
+        const { height, width } = event;
+        Designer.canvas.setHeight(height);
+        Designer.canvas.setWidth(width);
+    }
+
+    lineMode(isOn = false, selector = '') {
+
+        if (selector !== '') Designer.lastSelector = selector;
 
         if (!isOn) {
             Designer.canvas.__eventListeners["mouse:down"] = [];
             Designer.canvas.__eventListeners["mouse:move"] = [];
             Designer.canvas.__eventListeners["mouse:up"] = [];
+
+            Designer.canvas.forEachObject(function (element) {
+                if (element.name.hasOwnProperty('selector')) {
+                    if (element.name.selector == Designer.lastSelector) {
+                        element.selectable = true;
+                        element.evented = true;
+                    }
+                }
+            });
+
+            Designer.lastSelector = '';
             return Designer.canvas.selection = true;
         }
 
@@ -34,18 +71,23 @@ class Designer {
 
         Designer.canvas.selection = false;
         Designer.canvas.on('mouse:down', function (o) {
-            // Designer.canvas.getObjects().map( allO => allO.selection = false);
             if (Designer.canvas.findTarget(o.e)) return;
             isDown = true;
+            console.log('new fabric.Line', fabric.Line);
             let pointer = Designer.canvas.getPointer(o.e);
             let points = [pointer.x, pointer.y, pointer.x, pointer.y];
             line = new fabric.Line(points, {
                 strokeWidth: 5,
+                name: {
+                    id: 'studio-line-' + Math.random().toString(36).slice(2),
+                    selector,
+                },
                 fill: 'red',
                 stroke: 'red',
                 originX: 'center',
                 originY: 'center',
-                // selection = false
+                selectable: false,
+                evented: false
             });
             Designer.canvas.add(line);
         });
@@ -60,11 +102,9 @@ class Designer {
 
         Designer.canvas.on('mouse:up', function (o) {
             isDown = false;
-            // Designer.canvas.selection = true;
-
-            console.log(Designer.canvas.getObjects());
         });
     }
+
 
 }
 export default new Designer();

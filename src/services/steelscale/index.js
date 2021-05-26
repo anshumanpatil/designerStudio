@@ -2,19 +2,24 @@ import * as Rulez from "rulez-fork";
 import { Subject } from 'rxjs';
 
 class SteelScale {
-    
+
     constructor() {
         if (!SteelScale.instance) {
             SteelScale.instance = this;
         }
         this.events = new Subject();
+        this._horizontalRule = null;
+        this._verticalRule = null;
 
-          
+        this.events.subscribe(e => {
+            console.log(e);
+        })
+
         return SteelScale.instance;
     }
 
     HorizontalRule(element) {
-        const rule = new Rulez({
+        this._horizontalRule = new Rulez({
             element,
             layout: 'horizontal',
             textDefaults: {
@@ -22,12 +27,11 @@ class SteelScale {
                 offset: 25
             }
         });
-        rule.render();
-        this.events.next({"horizontal" : true})
+        this._horizontalRule.render();
     }
 
     VerticalRule(element) {
-        const rulez = new Rulez({
+        this._verticalRule = new Rulez({
             element,
             layout: 'vertical',
             textDefaults: {
@@ -35,7 +39,7 @@ class SteelScale {
                 offset: 25
             }
         });
-        rulez.render();
+        this._verticalRule.render();
     }
 }
 

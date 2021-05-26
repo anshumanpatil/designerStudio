@@ -16,12 +16,38 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+    <script>
+        function lineClicked(e) {
+            if(e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "blue"){
+                e.target.style.backgroundColor = 'red';
+                StudioEvent("studio:line", {mode: true, selector: Math.random().toString(36).slice(2)});
+            } else {
+                e.target.style.backgroundColor = 'blue';
+                StudioEvent("studio:line", {mode: false});
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <div class="container">
-        <div id="designerStudio"></div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                <div class="container">
+                    <div class="row"><button class="btn btn-primary">Select</button>  </div>
+                    <hr>
+                    <div class="row"><button class="btn btn-primary" onclick="lineClicked(event)">Line</button>  </div>
+                    <hr>
+                    <div class="row"><button class="btn btn-primary">Text</button>  </div>
+                    <hr>
+                    <div class="row"><button class="btn btn-primary">Square</button>  </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="col-sm-10">
+                <div id="designerStudio"></div>	
+            </div>
+        </div>
     </div>
     <script src="designer.js"></script>
 
