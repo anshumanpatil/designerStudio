@@ -18,17 +18,26 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
         function lineClicked(e) {
-            if(e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "blue"){
+            if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "blue") {
                 e.target.style.backgroundColor = 'red';
-                StudioEvent("StudioEvent", {type: 'studio:line', mode: true, selector: Math.random().toString(36).slice(2)});
+                StudioEvent(Actions.StudioEvent, { type: 'studio:line', mode: true, selector: Math.random().toString(36).slice(2) });
             } else {
                 e.target.style.backgroundColor = 'blue';
-                StudioEvent("StudioEvent", {type: 'studio:line', mode: false});
+                StudioEvent(Actions.StudioEvent, { type: 'studio:line', mode: false });
             }
         }
-        
+
+        function groupClicked(e) {
+            StudioEvent(Actions.StudioEvent, { type: 'studio:group', mode: true });
+        }
+
+        function unGroupClicked(e) {
+            StudioEvent(Actions.StudioEvent, { type: 'studio:group', mode: false });
+        }
+
         window.addEventListener('StudioLoaded', (e) => {
             console.log('StudioLoaded Event - Studio has been loaded!!');
+            StudioEvent(Actions.ResizeCard, { type: 'studio:resize', height: 500, width: 500 });
         })
     </script>
 </head>
@@ -38,18 +47,27 @@
         <div class="row">
             <div class="col-sm-2">
                 <div class="container">
-                    <div class="row"><button class="btn btn-primary">Select</button>  </div>
+                    <div class="row">
+                        <button class="btn btn-primary">Select</button>
+                    </div>
                     <hr>
-                    <div class="row"><button class="btn btn-primary" onclick="lineClicked(event)">Line</button>  </div>
+                    <div class="row">
+                        <button class="btn btn-primary" onclick="lineClicked(event)">Line</button>
+                    </div>
                     <hr>
-                    <div class="row"><button class="btn btn-primary">Text</button>  </div>
-                    <hr>
-                    <div class="row"><button class="btn btn-primary">Square</button>  </div>
-                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" onclick="groupClicked(event)">Group</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary" onclick="unGroupClicked(event)">UnGroup</button>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
             <div class="col-sm-10">
-                <div id="designerStudio"></div>	
+                <div id="designerStudio"></div>
             </div>
         </div>
     </div>

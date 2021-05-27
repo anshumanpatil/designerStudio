@@ -1,19 +1,23 @@
-import { Subject } from 'rxjs';
 
-export class DesignerLineElement {
+export default class DesignerLineElement {
     constructor(canvas) {
         DesignerLineElement.canvas = canvas;
     }
 
-    lineMode(isOn = false, selector = '') {
+    lineMode(e) {
+        let isOn = false 
+        let {selector, mode} = e;
+        isOn = mode;
+        console.log('studio:line', e );
 
-        if (selector !== '') DesignerLineElement.lastSelector = selector;
+        if (isOn) DesignerLineElement.lastSelector = selector;
 
         if (!isOn) {
             DesignerLineElement.canvas.__eventListeners["mouse:down"] = [];
             DesignerLineElement.canvas.__eventListeners["mouse:move"] = [];
             DesignerLineElement.canvas.__eventListeners["mouse:up"] = [];
 
+            console.log('DesignerLineElement.lastSelector', DesignerLineElement.lastSelector);
             DesignerLineElement.canvas.forEachObject(function (element) {
                 if (element.name.hasOwnProperty('selector')) {
                     if (element.name.selector == DesignerLineElement.lastSelector) {
@@ -65,4 +69,3 @@ export class DesignerLineElement {
         });
     }
 }
-// export default new DesignerLineElement();

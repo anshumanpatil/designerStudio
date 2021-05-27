@@ -1,105 +1,67 @@
-import { from } from "rxjs";
-// import {StudioEventManager} from '../eventmanager'
-import {StudioEvent} from '../../objects/actions'
+import StudioEventManager from '../eventmanager'
+import DesignerLineElement from '../line'
+import Actions from '../../objects/actions'
 export default class Designer {
     constructor() {
         if (!Designer.instance) {
             Designer.instance = this;
         }
-        // this.StudioEventManager = new StudioEventManager();
-        // console.log('this.StudioEventManagerthis.StudioEventManager', this.StudioEventManager.events);
-        document.body.addEventListener(StudioEvent, (e) => {
-            if(e.detail.type == 'studio:line'){
-                this.lineMode(e.detail.mode, e.detail.selector);
-                console.log('studio:line addEventListener', e.detail);
+
+        this.StudioEventManager = new StudioEventManager();
+        this.DesignerLineElement = null;
+
+        this.StudioEventManager.events.subscribe(e => {
+            if (Actions.getType(e) == "studio:resize") {
+                this.canvasSize(e)
             }
-        })
+
+            if (Actions.getType(e) == "studio:line") {
+                this.DesignerLineElement.lineMode(e)
+            }
+
+            if (Actions.getType(e) == "studio:group") {
+                this.studioGroup(e)
+            }
+
+        });
+
         return Designer.instance;
     }
 
-    addRect() {
-        const rect = new fabric.Rect({
-            left: 100,
-            top: 100,
-            fill: 'red',
-            width: 20,
-            height: 20
-        });
-        Designer.canvas.add(rect);
-    }
     createCard(element, backgroundColor) {
         Designer.canvas = new fabric.Canvas(element, { backgroundColor });
-
+        this.DesignerLineElement = new DesignerLineElement(Designer.canvas);
         // Designer.canvas.isDrawingMode = true;
 
     }
 
+    studioGroup(event) {
+        const { mode } = event;
+        if (!Designer.canvas.getActiveObject()) {
+            return;
+        }
+
+        if (!mode) {
+
+            if (Designer.canvas.getActiveObject().type !== 'group') {
+                return;
+            }
+            Designer.canvas.getActiveObject().toActiveSelection();
+            Designer.canvas.requestRenderAll();
+            return;
+        }
+
+
+        if (Designer.canvas.getActiveObject().type !== 'activeSelection') {
+            return;
+        }
+        Designer.canvas.getActiveObject().toGroup();
+        Designer.canvas.requestRenderAll();
+
+    }
     canvasSize(event) {
         const { height, width } = event;
         Designer.canvas.setHeight(height);
         Designer.canvas.setWidth(width);
     }
-
-    lineMode(isOn = false, selector = '') {
-
-        if (selector !== '') Designer.lastSelector = selector;
-
-        if (!isOn) {
-            Designer.canvas.__eventListeners["mouse:down"] = [];
-            Designer.canvas.__eventListeners["mouse:move"] = [];
-            Designer.canvas.__eventListeners["mouse:up"] = [];
-
-            Designer.canvas.forEachObject(function (element) {
-                if (element.name.hasOwnProperty('selector')) {
-                    if (element.name.selector == Designer.lastSelector) {
-                        element.selectable = true;
-                        element.evented = true;
-                    }
-                }
-            });
-
-            Designer.lastSelector = '';
-            return Designer.canvas.selection = true;
-        }
-
-        let line, isDown;
-
-        Designer.canvas.selection = false;
-        Designer.canvas.on('mouse:down', function (o) {
-            if (Designer.canvas.findTarget(o.e)) return;
-            isDown = true;
-            console.log('new fabric.Line', fabric.Line);
-            let pointer = Designer.canvas.getPointer(o.e);
-            let points = [pointer.x, pointer.y, pointer.x, pointer.y];
-            line = new fabric.Line(points, {
-                strokeWidth: 5,
-                name: {
-                    id: 'studio-line-' + Math.random().toString(36).slice(2),
-                    selector,
-                },
-                fill: 'red',
-                stroke: 'red',
-                originX: 'center',
-                originY: 'center',
-                selectable: false,
-                evented: false
-            });
-            Designer.canvas.add(line);
-        });
-
-        Designer.canvas.on('mouse:move', function (o) {
-            if (!isDown) return;
-            let pointer = Designer.canvas.getPointer(o.e);
-            line.set({ x2: pointer.x, y2: pointer.y });
-            line.setCoords();
-            Designer.canvas.renderAll();
-        });
-
-        Designer.canvas.on('mouse:up', function (o) {
-            isDown = false;
-        });
-    }
-
-
 }
-// export default new Designer();
