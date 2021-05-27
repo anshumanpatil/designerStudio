@@ -7,7 +7,7 @@ export default class DesignerLineElement {
     lineMode(e) {
         console.log('e', e);
         let isOn = false
-        let { selector, mode, strokeColor } = e;
+        let { selector, mode, strokeColor, strokeWidth } = e;
         isOn = mode;
         console.log('studio:line', e);
 
@@ -56,7 +56,7 @@ export default class DesignerLineElement {
             let pointer = DesignerLineElement.canvas.getPointer(o.e);
             let points = [pointer.x, pointer.y, pointer.x, pointer.y];
             line = new fabric.Line(points, {
-                strokeWidth: 5,
+                strokeWidth: parseInt(strokeWidth),
                 name: {
                     id: 'studio-line-' + Math.random().toString(36).slice(2),
                     selector,

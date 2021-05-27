@@ -45,7 +45,10 @@
         window.addEventListener('StudioLoaded', (e) => {
             console.log('StudioLoaded Event - Studio has been loaded!!');
 
-
+            $("#strokeWidth").change(function () {
+                let strokeWidth = $("#strokeWidth").val();
+                StudioEvent(Actions.StudioEvent, { type: 'studio:stroke:width', strokeWidth });
+            })
 
             $("#strokeColor").spectrum({
                 color: "#f00",
@@ -68,11 +71,19 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <button class="btn btn-primary btn-sm" onclick="lineClicked(event)">Line</button>
                         </div>
+                    </div>
+                    <hr>
+                    STROKE
+                    <div class="row">
+                        
                         <div class="col-sm-6">
-                            Stroke : <input id='strokeColor' style="width: 100%; height: 30px;"/>
+                            <input id='strokeColor' style="width: 50px; height: 30px;"/>
+                        </div>
+                        <div class="col-sm-6">
+                            <input id="strokeWidth" style="width: 50px; height: 30px;" type="number" min="0" max="10" value="2"/>
                         </div>
                     </div>
                     <hr>
