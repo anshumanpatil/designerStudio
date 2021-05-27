@@ -5,10 +5,11 @@ export default class DesignerLineElement {
     }
 
     lineMode(e) {
-        let isOn = false 
-        let {selector, mode} = e;
+        console.log('e', e);
+        let isOn = false
+        let { selector, mode } = e;
         isOn = mode;
-        console.log('studio:line', e );
+        console.log('studio:line', e);
 
         if (isOn) DesignerLineElement.lastSelector = selector;
 
@@ -17,18 +18,37 @@ export default class DesignerLineElement {
             DesignerLineElement.canvas.__eventListeners["mouse:move"] = [];
             DesignerLineElement.canvas.__eventListeners["mouse:up"] = [];
 
-            console.log('DesignerLineElement.lastSelector', DesignerLineElement.lastSelector);
-            DesignerLineElement.canvas.forEachObject(function (element) {
-                if (element.name.hasOwnProperty('selector')) {
+            DesignerLineElement.canvas.selection = true
+            let selectionArray = []
+            DesignerLineElement.canvas.getObjects().forEach(function (element) {
+                if (element.name && element.name.hasOwnProperty('selector')) {
                     if (element.name.selector == DesignerLineElement.lastSelector) {
                         element.selectable = true;
                         element.evented = true;
+                        if (DesignerLineElement.canvas.getObjects().length > 1) {
+                            selectionArray.push(element);
+                        } else {
+                            DesignerLineElement.canvas.setActiveObject(element);
+                        }
                     }
                 }
             });
 
+            if (selectionArray.length) {
+                DesignerLineElement.canvas.setActiveObject(new fabric.ActiveSelection(selectionArray, {
+                    canvas: DesignerLineElement.canvas
+                }));
+            }
+
+
+
             DesignerLineElement.lastSelector = '';
-            return DesignerLineElement.canvas.selection = true;
+            // if (DesignerLineElement.canvas.getActiveObject().type !== 'activeSelection') {
+            //     return;
+            // }
+            // DesignerLineElement.canvas.getActiveObject().toGroup();
+            // DesignerLineElement.canvas.requestRenderAll();
+            return DesignerLineElement.canvas.requestRenderAll();;
         }
 
         let line, isDown;
