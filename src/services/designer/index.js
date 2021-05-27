@@ -27,7 +27,7 @@ export default class Designer {
             }
 
             if (Actions.getType(e) == "studio:group") {
-                this.studioGroup(e)
+                this.studioGroup(e);
             }
 
             if (Actions.getType(e) == "studio:stroke:color") {
@@ -40,18 +40,28 @@ export default class Designer {
                 Designer.strokeWidth = e.strokeWidth;
             }
 
+            if (Actions.getType(e) == "studio:bg:color") {
+                console.log('studio:bg:color', e);
+                Designer.backgroundColor = e.color;
+                this.bgColor(e);
+            }
+
         });
 
         return Designer.instance;
     }
 
     createCard(element, backgroundColor) {
+        Designer.backgroundColor = backgroundColor;
         Designer.canvas = new fabric.Canvas(element, { backgroundColor });
         this.DesignerLineElement = new DesignerLineElement(Designer.canvas);
         // Designer.canvas.isDrawingMode = true;
 
     }
-
+    bgColor(event) {
+        Designer.canvas.backgroundColor = Designer.backgroundColor;
+        Designer.canvas.renderAll();
+    }
     studioGroup(event) {
         const { mode } = event;
         if (!Designer.canvas.getActiveObject()) {

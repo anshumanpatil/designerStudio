@@ -61,6 +61,18 @@
                     StudioEvent(Actions.StudioEvent, { type: 'studio:stroke:color', color: selectedColor.toHexString() });
                 }
             });
+            $("#fillColor").spectrum({
+                color: "#f00",
+                change: function(selectedColor) {
+                    StudioEvent(Actions.StudioEvent, { type: 'studio:fill:color', color: selectedColor.toHexString() });
+                }
+            });
+            $("#bgColor").spectrum({
+                color: "#f00",
+                change: function(selectedColor) {
+                    StudioEvent(Actions.StudioEvent, { type: 'studio:bg:color', color: selectedColor.toHexString() });
+                }
+            });
             StudioEvent(Actions.ResizeCard, { type: 'studio:resize', height: 500, width: 500 });
         })
     </script>
