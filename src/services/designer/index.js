@@ -54,10 +54,26 @@ export default class Designer {
     createCard(element, backgroundColor) {
         Designer.backgroundColor = backgroundColor;
         Designer.canvas = new fabric.Canvas(element, { backgroundColor });
+
+        Designer.canvas.on({
+            'before:selection:cleared': this._selectionEvent,
+            'selection:updated': this._selectionEvent,
+            'selection:change': this._selectionEvent,
+            'selection:created': this._selectionEvent
+        });
+
+          
         this.DesignerLineElement = new DesignerLineElement(Designer.canvas);
         // Designer.canvas.isDrawingMode = true;
 
     }
+    _selectionEvent(e){
+        if(!e.hasOwnProperty('selected')) return window.dispatchEvent(new CustomEvent('action:deselected'));
+        if(e.selected.length == 1){
+            window.dispatchEvent(new CustomEvent('action:selected', { detail: e }));
+        }
+    }
+
     bgColor(event) {
         Designer.canvas.backgroundColor = Designer.backgroundColor;
         Designer.canvas.renderAll();

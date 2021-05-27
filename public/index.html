@@ -49,6 +49,18 @@
 
         window.addEventListener('StudioLoaded', (e) => {
             console.log('StudioLoaded Event - Studio has been loaded!!');
+            
+            window.addEventListener('action:selected', (e) => {
+                let selectedElement = e.detail.selected[0];
+                console.log('action:selected', e.detail.selected);
+                const { stroke, strokeWidth, fill } = selectedElement;
+                $("#strokeWidth").val(parseInt(strokeWidth));
+                $("#strokeColor").spectrum("set", stroke);
+            })
+
+            window.addEventListener('action:deselected', (e) => {
+                console.log('action:deselected', e.detail);
+            })
 
             $("#strokeWidth").change(function () {
                 let strokeWidth = $("#strokeWidth").val();
