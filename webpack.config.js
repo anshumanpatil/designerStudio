@@ -1,5 +1,5 @@
 const path = require('path');
-const WebpackCleanPlugin = require('webpack-clean');
+const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   devServer: {
@@ -16,11 +16,14 @@ module.exports = {
     filename: 'designer.js',
     path: path.resolve(__dirname, 'dist'),
   },
-  // plugins: [
-  //   new WebpackCleanPlugin([
-  //     // 'dist/designer.js'
-  //   ])
-  // ],
+  plugins: [
+    new CopyPlugin({
+      patterns: [
+        { from: "public/index.html", to: "index.html", toType: "file" },
+      ],
+    }),
+
+  ],
   module: {
     rules: [
       {

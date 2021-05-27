@@ -1,11 +1,18 @@
-class Designer {
+import { from } from "rxjs";
+// import {StudioEventManager} from '../eventmanager'
+import {StudioEvent} from '../../objects/actions'
+export default class Designer {
     constructor() {
         if (!Designer.instance) {
             Designer.instance = this;
         }
-        document.body.addEventListener('studio:line', (e) => {
-            this.lineMode(e.detail.mode, e.detail.selector);
-            console.log('studio:line addEventListener', e.detail);
+        // this.StudioEventManager = new StudioEventManager();
+        // console.log('this.StudioEventManagerthis.StudioEventManager', this.StudioEventManager.events);
+        document.body.addEventListener(StudioEvent, (e) => {
+            if(e.detail.type == 'studio:line'){
+                this.lineMode(e.detail.mode, e.detail.selector);
+                console.log('studio:line addEventListener', e.detail);
+            }
         })
         return Designer.instance;
     }
@@ -95,4 +102,4 @@ class Designer {
 
 
 }
-export default new Designer();
+// export default new Designer();

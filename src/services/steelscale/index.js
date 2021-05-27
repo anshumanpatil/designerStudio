@@ -1,6 +1,6 @@
 import * as Rulez from "rulez-fork";
 
-class SteelScale {
+export default class SteelScale {
 
     constructor() {
         if (!SteelScale.instance) {
@@ -36,5 +36,4 @@ class SteelScale {
     }
 }
 
-export default new SteelScale();
 

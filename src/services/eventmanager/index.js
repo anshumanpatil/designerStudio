@@ -1,14 +1,14 @@
 import { Subject } from 'rxjs';
 
-class StudioEventManager {
+export default class StudioEventManager {
     constructor() {
         
         if (!StudioEventManager.instance) {
             StudioEventManager.instance = this;
-            // StudioEventManager.instance.events = new Subject();
         }
         
+        this.events = new Subject();
         return StudioEventManager.instance;
     }
 }
-export default new StudioEventManager();
+// export default new StudioEventManager();

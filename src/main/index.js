@@ -1,11 +1,17 @@
 import { LitElement, html } from 'lit-element';
-import { SteelScale, Designer } from '../services';
+import SteelScale from '../services/steelscale';
+import Designer from '../services/designer';
+import StudioEventManager from '../services/eventmanager';
 import mainHTML from './main.html';
 
 export class DesignerElement extends LitElement {
     constructor() {
         super();
         this.shadowRoot.innerHTML = mainHTML;
+
+        this.Designer = new Designer();
+        this.SteelScale = new SteelScale();
+        this.StudioEventManager = new StudioEventManager();
     }
 
     connectedCallback() {
@@ -18,17 +24,11 @@ export class DesignerElement extends LitElement {
         const c = this.renderRoot.querySelector('#c');
         const horizontalRule = this.renderRoot.querySelector('#horizontalRule');
         const verticalRule = this.renderRoot.querySelector('#verticalRule');
-        SteelScale.HorizontalRule(horizontalRule);
-        SteelScale.VerticalRule(verticalRule);
-        Designer.createCard(c, '#FFFF00');
-        await this.setCardSize(300, 300);
-
-
-        // Designer.lineMode(true);
-
-        // setTimeout(() => {
-        //     Designer.lineMode(false);
-        // }, 35000);
+        this.SteelScale.HorizontalRule(horizontalRule);
+        this.SteelScale.VerticalRule(verticalRule);
+        this.Designer.createCard(c, '#FFFF00');
+        window.dispatchEvent(new CustomEvent('StudioLoaded'));
+        // await this.setCardSize(300, 300);
     }
 
     async setCardSize(ht, wt) {
