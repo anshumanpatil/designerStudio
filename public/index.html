@@ -20,6 +20,11 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
 
+    <style>
+        .row {
+            margin-top: 5px;
+        }
+    </style>
     <script>
         function lineClicked(e) {
             // console.log($("#strokeColor").spectrum("get").toHexString());
@@ -62,37 +67,51 @@
 </head>
 
 <body>
-    <div class="container-fluid">
+    <div class="container-fluid" style="margin-top: 10px; font-size: small;">
         <div class="row">
             <div class="col-sm-4">
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-primary btn-sm">Select</button>
+                        <div class="col-sm-3">Stroke Color</div>
+                        <div class="col-sm-3"><input id='strokeColor' style="width: 50px; height: 30px;"/></div>
+                        <div class="col-sm-3">Fill Color</div>
+                        <div class="col-sm-3"><input id='fillColor' style="width: 50px; height: 30px;"/></div>
                     </div>
-                    <hr>
                     <div class="row">
-                        <div class="col-sm-4">
-                            <button class="btn btn-primary btn-sm" onclick="lineClicked(event)">Line</button>
+                        <div class="col-sm-3">
+                            <label>Background Color</label>
                         </div>
-                    </div>
-                    <hr>
-                    STROKE
-                    <div class="row">
-                        
-                        <div class="col-sm-6">
-                            <input id='strokeColor' style="width: 50px; height: 30px;"/>
+                        <div class="col-sm-3"><input id='bgColor' style="width: 50px; height: 30px;"/></div>
+                        <div class="col-sm-3">
+                            <label>Stroke Width</label>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-3">
                             <input id="strokeWidth" style="width: 50px; height: 30px;" type="number" min="0" max="10" value="2"/>
                         </div>
                     </div>
-                    <hr>
+                    <div class="row">
+                        <button class="btn btn-primary btn-block btn-sm">Select</button>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary btn-block btn-sm" onclick="lineClicked(event)">Line</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary btn-block btn-sm" >Rect</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary btn-block btn-sm" >Circle</button>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-primary btn-block btn-sm" >Image</button>
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col-sm-6">
-                            <button class="btn btn-primary btn-sm" onclick="groupClicked(event)">Group</button>
+                            <button class="btn btn-primary btn-block btn-sm" onclick="groupClicked(event)">Group</button>
                         </div>
                         <div class="col-sm-6">
-                            <button class="btn btn-primary btn-sm" onclick="unGroupClicked(event)">UnGroup</button>
+                            <button class="btn btn-primary btn-block btn-sm" onclick="unGroupClicked(event)">UnGroup</button>
                         </div>
                     </div>
                     
