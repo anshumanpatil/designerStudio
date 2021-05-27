@@ -7,6 +7,8 @@ export default class Designer {
             Designer.instance = this;
         }
 
+        Designer.strokeColor = '#FF0000';
+
         this.StudioEventManager = new StudioEventManager();
         this.DesignerLineElement = null;
 
@@ -16,11 +18,19 @@ export default class Designer {
             }
 
             if (Actions.getType(e) == "studio:line") {
-                this.DesignerLineElement.lineMode(e)
+                this.DesignerLineElement.lineMode({
+                    ...e, 
+                    strokeColor: Designer.strokeColor
+                })
             }
 
             if (Actions.getType(e) == "studio:group") {
                 this.studioGroup(e)
+            }
+
+            if (Actions.getType(e) == "studio:stroke:color") {
+                console.log('studio:stroke:color', e);
+                Designer.strokeColor = e.color;
             }
 
         });

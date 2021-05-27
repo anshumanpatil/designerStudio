@@ -7,7 +7,7 @@ export default class DesignerLineElement {
     lineMode(e) {
         console.log('e', e);
         let isOn = false
-        let { selector, mode } = e;
+        let { selector, mode, strokeColor } = e;
         isOn = mode;
         console.log('studio:line', e);
 
@@ -43,11 +43,6 @@ export default class DesignerLineElement {
 
 
             DesignerLineElement.lastSelector = '';
-            // if (DesignerLineElement.canvas.getActiveObject().type !== 'activeSelection') {
-            //     return;
-            // }
-            // DesignerLineElement.canvas.getActiveObject().toGroup();
-            // DesignerLineElement.canvas.requestRenderAll();
             return DesignerLineElement.canvas.requestRenderAll();;
         }
 
@@ -66,8 +61,8 @@ export default class DesignerLineElement {
                     id: 'studio-line-' + Math.random().toString(36).slice(2),
                     selector,
                 },
-                fill: 'red',
-                stroke: 'red',
+                fill: strokeColor,
+                stroke: strokeColor,
                 originX: 'center',
                 originY: 'center',
                 selectable: false,

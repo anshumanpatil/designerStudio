@@ -10,14 +10,21 @@
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
 
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+
     <script>
         function lineClicked(e) {
+            // console.log($("#strokeColor").spectrum("get").toHexString());
+
+            let strokeColor = $("#strokeColor").spectrum("get").toHexString();
             if (e.target.style.backgroundColor == "" || e.target.style.backgroundColor == "blue") {
                 e.target.style.backgroundColor = 'red';
                 StudioEvent(Actions.StudioEvent, { type: 'studio:line', mode: true, selector: Math.random().toString(36).slice(2) });
@@ -37,6 +44,15 @@
 
         window.addEventListener('StudioLoaded', (e) => {
             console.log('StudioLoaded Event - Studio has been loaded!!');
+
+
+
+            $("#strokeColor").spectrum({
+                color: "#f00",
+                change: function(selectedColor) {
+                    StudioEvent(Actions.StudioEvent, { type: 'studio:stroke:color', color: selectedColor.toHexString() });
+                }
+            });
             StudioEvent(Actions.ResizeCard, { type: 'studio:resize', height: 500, width: 500 });
         })
     </script>
@@ -48,19 +64,24 @@
             <div class="col-sm-2">
                 <div class="container">
                     <div class="row">
-                        <button class="btn btn-primary">Select</button>
-                    </div>
-                    <hr>
-                    <div class="row">
-                        <button class="btn btn-primary" onclick="lineClicked(event)">Line</button>
+                        <button class="btn btn-primary btn-sm">Select</button>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-sm-6">
-                            <button class="btn btn-primary" onclick="groupClicked(event)">Group</button>
+                            <button class="btn btn-primary btn-sm" onclick="lineClicked(event)">Line</button>
                         </div>
                         <div class="col-sm-6">
-                            <button class="btn btn-primary" onclick="unGroupClicked(event)">UnGroup</button>
+                            Stroke : <input id='strokeColor' style="width: 100%; height: 30px;"/>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary btn-sm" onclick="groupClicked(event)">Group</button>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class="btn btn-primary btn-sm" onclick="unGroupClicked(event)">UnGroup</button>
                         </div>
                     </div>
                     
