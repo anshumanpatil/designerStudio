@@ -21,10 +21,12 @@ export default class DesignerLineElement {
             DesignerLineElement.canvas.selection = true
             let selectionArray = []
             DesignerLineElement.canvas.getObjects().forEach(function (element) {
+                element.selectable = true;
+                element.evented = true;
                 if (element.name && element.name.hasOwnProperty('selector')) {
                     if (element.name.selector == DesignerLineElement.lastSelector) {
-                        element.selectable = true;
-                        element.evented = true;
+                        // element.selectable = true;
+                        // element.evented = true;
                         if (DesignerLineElement.canvas.getObjects().length > 1) {
                             selectionArray.push(element);
                         } else {
@@ -47,6 +49,12 @@ export default class DesignerLineElement {
         }
 
         let line, isDown;
+
+
+        DesignerLineElement.canvas.getObjects().forEach(function (element) {
+            element.selectable = false;
+            element.evented = false;
+        });
 
         DesignerLineElement.canvas.selection = false;
         DesignerLineElement.canvas.on('mouse:down', function (o) {
