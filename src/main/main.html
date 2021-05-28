@@ -1,15 +1,25 @@
+<style>
+    .svgRule {
+        cursor: default;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+    }
+</style>
 <table>
     <tr style="width: 100%; border-spacing: 0px; padding: 0; margin: 0;">
-        <td style="width: 15px; height: 15px; background-color: rgb(211, 190, 190);">
+        <td style="width: 15px; height: 15px; background-color: rgb(211, 190, 190);"  class="svgRule">
 
         </td>
         <td id="horizontalRuleContainer" style="height: 15px; background-color: rgb(211, 190, 190);">
-            <svg id="horizontalRule" width="100%" height="30" xmlns="http://www.w3.org/2000/svg"></svg>
+            <svg id="horizontalRule" width="100%" height="30" xmlns="http://www.w3.org/2000/svg" class="svgRule"></svg>
         </td>
     </tr>
     <tr style="width: 100%; border-spacing: 0px; padding: 0; margin: 0;">
         <td id="verticalRuleContainer" style="width: 15px; background-color: rgb(211, 190, 190);">
-            <svg id="verticalRule" width="30" height="100%" xmlns="http://www.w3.org/2000/svg"></svg>
+            <svg id="verticalRule" width="30" height="100%" xmlns="http://www.w3.org/2000/svg" class="svgRule"></svg>
         </td>
         <td id="canvasContainer">
             <canvas id="c"></canvas>
