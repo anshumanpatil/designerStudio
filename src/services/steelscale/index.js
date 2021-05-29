@@ -15,10 +15,83 @@ export default class SteelScale {
             SteelScale.instance = this;
         }
 
+        SteelScale.units = {
+            cm : {
+                divisions: [
+                    {
+                        pixelGap: 38,
+                        lineLength: 20
+                    },
+                    {
+                        pixelGap: 6,
+                        lineLength: 10
+                    },
+                    {
+                        pixelGap: 19,
+                        lineLength: 15
+                    }
+                ],
+                texts: [
+                    {
+                        pixelGap: 38
+                    }
+                ]
+            },
+            mm : {
+                divisions: [
+                    {
+                        pixelGap: 96,
+                        lineLength: 20
+                    },
+                    {
+                        pixelGap: 12,
+                        lineLength: 10
+                    },
+                    {
+                        pixelGap: 48,
+                        lineLength: 15
+                    }
+                ],
+                texts: [
+                    {
+                        pixelGap: 96
+                    }
+                ]
+            },
+            inch : {
+                divisions: [
+                    {
+                        pixelGap: 96,
+                        lineLength: 20
+                    },
+                    {
+                        pixelGap: 12,
+                        lineLength: 10
+                    },
+                    {
+                        pixelGap: 48,
+                        lineLength: 15
+                    }
+                ],
+                texts: [
+                    {
+                        pixelGap: 96
+                    }
+                ]
+            },
+        }
+
+
+        SteelScale.selectedUnit = SteelScale.units['inch'];
+
         this.StudioEventManager = new StudioEventManager();
         this.StudioEventManager.events.subscribe(e => {
             if (Actions.getType(e) == "studio:resize") {
-                this.resizeRulez(e)
+                this.resizeRulez(e);
+            }
+            if (Actions.getType(e) == "studio:scale:unit") {
+                // SteelScale.selectedUnit = SteelScale.units[e.unit];
+                this.changeUnits();
             }
         });
 
@@ -42,7 +115,10 @@ export default class SteelScale {
         this._horizontalRule = new Rulez({
             element: this.horizontalRule,
             layout: 'horizontal',
+            divisions: SteelScale.selectedUnit.divisions,
+            texts: SteelScale.selectedUnit.texts,
             textDefaults: {
+                // showUnits: true,
                 rotation: 0,
                 offset: 25
             }
@@ -54,7 +130,10 @@ export default class SteelScale {
         this._verticalRule = new Rulez({
             element: this.verticalRule,
             layout: 'vertical',
+            divisions: SteelScale.selectedUnit.divisions,
+            texts: SteelScale.selectedUnit.texts,
             textDefaults: {
+                // showUnits: true,
                 rotation: -90,
                 offset: 25
             }
@@ -74,6 +153,15 @@ export default class SteelScale {
 
         this.HorizontalRule();
         this.VerticalRule();
+    }
+
+
+    changeUnits() {
+        // console.log('SteelScale.selectedUnit', SteelScale.selectedUnit);
+        this._verticalRule.resize()
+        this._horizontalRule.resize()
+        // this.HorizontalRule();
+        // this.VerticalRule();
     }
 }
 

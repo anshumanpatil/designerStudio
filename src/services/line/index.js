@@ -50,7 +50,7 @@ export default class DesignerLineElement {
 
         let line, isDown;
 
-
+        console.log("document.querySelector('#designerStudio').style", document.querySelector('#designerStudio').style);
         DesignerLineElement.canvas.getObjects().forEach(function (element) {
             element.selectable = false;
             element.evented = false;

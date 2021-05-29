@@ -16,6 +16,16 @@ export class DesignerElement extends LitElement {
 
     connectedCallback() {
         super.connectedCallback();
+        let scaleUnits = this.renderRoot.querySelector('#scaleUnits');
+        scaleUnits.addEventListener('click', (e) => {
+            let arr = ['cm', 'mm', 'inch'];
+            let idx = arr.indexOf( e.target.innerHTML.trim()) >= 2 ? -1 : arr.indexOf( e.target.innerHTML.trim());
+            e.target.innerHTML = arr[idx + 1];
+            this.StudioEventManager.events.next({
+                type: 'studio:scale:unit',
+                unit: arr[idx + 1]
+            })
+        })
     }
     disconnectedCallback() {
         super.disconnectedCallback();

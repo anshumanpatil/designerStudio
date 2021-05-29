@@ -47,12 +47,33 @@
             StudioEvent(Actions.StudioEvent, { type: 'studio:group', mode: false });
         }
 
+        function setBaseValues(baseState) {
+            $("#strokeColor").spectrum("set", baseState.strokeColor);
+            $("#fillColor").spectrum("set", baseState.fillColor);
+            $("#bgColor").spectrum("set", baseState.bgColor);
+            $("#strokeWidth").val(baseState.strokeWidth);
+            StudioEvent(Actions.ResizeCard, { type: 'studio:resize', height: baseState.cardHeight, width: baseState.cardWidth });
+        }
+
         window.addEventListener('StudioLoaded', (e) => {
             console.log('StudioLoaded Event - Studio has been loaded!!');
+            let baseState = {
+                strokeWidth: 2,
+                strokeColor : "#f00",
+                fillColor : "#f00",
+                bgColor : "#f00",
+                cardHeight: 500,
+                cardWidth: 500
+            }
+
+
+            setBaseValues(baseState);
             
+
             window.addEventListener('action:selected', (e) => {
                 let selectedElement = e.detail.selected[0];
                 console.log('action:selected', e.detail.selected);
+                if(!selectedElement.hasOwnProperty('name')) return; // return if unknown[not created by studio or group]
                 const { stroke, strokeWidth, fill } = selectedElement;
                 $("#strokeWidth").val(parseInt(strokeWidth));
                 $("#strokeColor").spectrum("set", stroke);
@@ -60,6 +81,8 @@
 
             window.addEventListener('action:deselected', (e) => {
                 console.log('action:deselected', e.detail);
+                // set base values return
+                setBaseValues(baseState);
             })
 
             $("#strokeWidth").change(function () {
@@ -68,24 +91,24 @@
             })
 
             $("#strokeColor").spectrum({
-                color: "#f00",
+                color: baseState.strokeColor,
                 change: function(selectedColor) {
                     StudioEvent(Actions.StudioEvent, { type: 'studio:stroke:color', color: selectedColor.toHexString() });
                 }
             });
             $("#fillColor").spectrum({
-                color: "#f00",
+                color: baseState.fillColor,
                 change: function(selectedColor) {
                     StudioEvent(Actions.StudioEvent, { type: 'studio:fill:color', color: selectedColor.toHexString() });
                 }
             });
             $("#bgColor").spectrum({
-                color: "#f00",
+                color: baseState.bgColor,
                 change: function(selectedColor) {
                     StudioEvent(Actions.StudioEvent, { type: 'studio:bg:color', color: selectedColor.toHexString() });
                 }
             });
-            StudioEvent(Actions.ResizeCard, { type: 'studio:resize', height: 500, width: 500 });
+            
         })
     </script>
 </head>
@@ -110,7 +133,7 @@
                             <label>Stroke Width</label>
                         </div>
                         <div class="col-sm-3">
-                            <input id="strokeWidth" style="width: 50px; height: 30px;" type="number" min="0" max="10" value="2"/>
+                            <input id="strokeWidth" style="width: 50px; height: 30px;" type="number" min="0" max="10" value="0"/>
                         </div>
                     </div>
                     <div class="row">
