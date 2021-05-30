@@ -21,13 +21,17 @@ export default class Designer {
             if (Actions.getType(e) == "studio:line") {
                 this.DesignerLineElement.lineMode({
                     ...e, 
+                    selector: Math.random().toString(36).slice(2),
                     strokeColor: Designer.strokeColor,
                     strokeWidth: Designer.strokeWidth
                 })
             }
 
             if (Actions.getType(e) == "studio:group") {
-                this.studioGroup(e);
+                this.studioGroup({
+                    ...e,
+                    selector: Math.random().toString(36).slice(2)
+                });
             }
 
             if (Actions.getType(e) == "studio:stroke:color") {
